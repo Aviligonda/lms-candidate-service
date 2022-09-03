@@ -2,23 +2,24 @@ package com.bridgelabz.lmscandidateservice.service;
 
 import com.bridgelabz.lmscandidateservice.dto.CandidateDTO;
 import com.bridgelabz.lmscandidateservice.model.CandidateModel;
+import com.bridgelabz.lmscandidateservice.util.Response;
 
 import java.util.List;
 
 public interface ICandidateService {
-    CandidateModel addCandidate(CandidateDTO candidateDTO, Long techStackId);
+    Response addCandidate(String token, CandidateDTO candidateDTO, Long techStackId);
 
-    List<CandidateModel> getAllCandidates();
+    List<CandidateModel> getAllCandidates(String token);
 
-    CandidateModel updateCandidateDetails(CandidateDTO candidateDTO, Long id, Long techStackId);
+    Response updateCandidateDetails(String token, CandidateDTO candidateDTO, Long id, Long techStackId);
 
-    CandidateModel deleteCandidate(Long id);
+    Response deleteCandidate(String token, Long id);
 
-    List<CandidateModel> getCandidatesByStatus(String status);
+    List<CandidateModel> getCandidatesByStatus(String status, String s);
 
-    CandidateModel changeStatus(Long id, String token);
+    Response changeStatus(String status, Long id, String token);
 
-    Long getCountByStatus(String token);
+    Long getCountByStatus(String token, String status);
 
 
 }

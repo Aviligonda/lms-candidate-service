@@ -3,7 +3,10 @@ package com.bridgelabz.lmscandidateservice.controller;
 import com.bridgelabz.lmscandidateservice.dto.CandidateDTO;
 import com.bridgelabz.lmscandidateservice.model.CandidateModel;
 import com.bridgelabz.lmscandidateservice.service.ICandidateService;
+import com.bridgelabz.lmscandidateservice.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,9 +24,12 @@ public class CandidateController {
      * @Param :  token,techStackId and candidateDTO
      * */
     @PostMapping("/addCandidate")
-    public CandidateModel addCandidate(@Valid @RequestBody CandidateDTO candidateDTO,
-                                       @RequestParam Long techStackId) {
-        return candidateService.addCandidate(candidateDTO, techStackId);
+    public ResponseEntity<Response> addCandidate(@RequestHeader String token,
+                                                 @Valid @RequestBody CandidateDTO candidateDTO,
+                                                 @RequestParam Long techStackId) {
+        Response response = candidateService.addCandidate(token, candidateDTO, techStackId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     /*z
@@ -32,8 +38,9 @@ public class CandidateController {
      * @Param :  token
      * */
     @GetMapping("/getAllCandidates")
-    public List<CandidateModel> getAllCandidates() {
-        return candidateService.getAllCandidates();
+    public ResponseEntity<List<?>> getAllCandidates(@RequestHeader String token) {
+        List<CandidateModel> response = candidateService.getAllCandidates(token);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /*
@@ -42,10 +49,13 @@ public class CandidateController {
      * @Param :  token,candidateDTO,id and techStackId
      * */
     @PutMapping("/updateCandidateDetails/{id}")
-    public CandidateModel updateCandidateDetails(@Valid @RequestBody CandidateDTO candidateDTO,
-                                                 @PathVariable Long id,
-                                                 @RequestParam Long techStackId) {
-        return candidateService.updateCandidateDetails(candidateDTO, id, techStackId);
+    public ResponseEntity<Response> updateCandidateDetails(@RequestHeader String token,
+                                                           @Valid @RequestBody CandidateDTO candidateDTO,
+                                                           @PathVariable Long id,
+                                                           @RequestParam Long techStackId) {
+        Response response = candidateService.updateCandidateDetails(token, candidateDTO, id, techStackId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     /*
@@ -54,8 +64,11 @@ public class CandidateController {
      * @Param : token and id
      * */
     @DeleteMapping("/deleteCandidateDetails/{id}")
-    public CandidateModel deleteCandidate(@PathVariable Long id) {
-        return candidateService.deleteCandidate(id);
+    public ResponseEntity<Response> deleteCandidate(@RequestHeader String token,
+                                                    @PathVariable Long id) {
+        Response response = candidateService.deleteCandidate(token, id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     /*
@@ -64,8 +77,10 @@ public class CandidateController {
      * @Param :  token and status
      * */
     @GetMapping("/getCandidatesByStatus")
-    public List<CandidateModel> getCandidatesByStatus(@RequestParam String status) {
-        return candidateService.getCandidatesByStatus(status);
+    public ResponseEntity<List<?>> getCandidatesByStatus(@RequestHeader String token,
+                                                         @RequestParam String status) {
+        List<CandidateModel> response = candidateService.getCandidatesByStatus(token, status);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /*
@@ -74,9 +89,12 @@ public class CandidateController {
      * @Param :  id,token and status
      * */
     @PutMapping("/changeCandidateStatus/{id}")
-    public CandidateModel changeCandidateStatus(@PathVariable Long id,
-                                                @RequestParam String status) {
-        return candidateService.changeStatus(id, status);
+    public ResponseEntity<Response> changeCandidateStatus(@RequestHeader String token,
+                                                          @PathVariable Long id,
+                                                          @RequestParam String status) {
+        Response response = candidateService.changeStatus(token, id, status);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     /*
@@ -85,8 +103,10 @@ public class CandidateController {
      * @Param :  token and status
      * */
     @GetMapping("/getCountByStatus")
-    public Long getCountByStatus(@RequestParam String status) {
-        return candidateService.getCountByStatus(status);
+    public ResponseEntity<Long> getCountByStatus(@RequestHeader String token,
+                                                 @RequestParam String status) {
+        Long response = candidateService.getCountByStatus(token, status);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
