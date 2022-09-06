@@ -32,7 +32,7 @@ public class CandidateService implements ICandidateService {
      * */
     @Override
     public Response addCandidate(String token, CandidateDTO candidateDTO, Long techStackId) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8080/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://ADMIN-SERVICE:8080/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             CandidateModel candidateModel = new CandidateModel(candidateDTO);
             candidateModel.setRegisterDate(LocalDate.now());
@@ -52,7 +52,7 @@ public class CandidateService implements ICandidateService {
      * */
     @Override
     public List<CandidateModel> getAllCandidates(String token) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8080/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://ADMIN-SERVICE:8080/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             List<CandidateModel> isCandidates = candidateRepository.findAll();
             if (isCandidates.size() > 0) {
@@ -71,7 +71,7 @@ public class CandidateService implements ICandidateService {
      * */
     @Override
     public Response updateCandidateDetails(String token, CandidateDTO candidateDTO, Long id, Long techStackId) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8080/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://ADMIN-SERVICE:8080/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Optional<CandidateModel> isCandidate = candidateRepository.findById(id);
             if (isCandidate.isPresent()) {
@@ -107,7 +107,7 @@ public class CandidateService implements ICandidateService {
      * */
     @Override
     public Response deleteCandidate(String token, Long id) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8080/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://ADMIN-SERVICE:8080/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Optional<CandidateModel> isCandidate = candidateRepository.findById(id);
             if (isCandidate.isPresent()) {
@@ -130,7 +130,7 @@ public class CandidateService implements ICandidateService {
      * */
     @Override
     public List<CandidateModel> getCandidatesByStatus(String status, String token) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8080/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://ADMIN-SERVICE:8080/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             List<CandidateModel> isCandidate = candidateRepository.findAllByStatus(status);
             if (isCandidate.size() > 0) {
@@ -149,7 +149,7 @@ public class CandidateService implements ICandidateService {
      * */
     @Override
     public Response changeStatus(String token, Long id, String status) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8080/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://ADMIN-SERVICE:8080/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Optional<CandidateModel> isCandidate = candidateRepository.findById(id);
             if (isCandidate.isPresent()) {
@@ -170,7 +170,7 @@ public class CandidateService implements ICandidateService {
      * */
     @Override
     public Long getCountByStatus(String token, String status) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8080/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://ADMIN-SERVICE:8080/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Long isCandidate = candidateRepository.getCountByStatus(status);
             return isCandidate;
